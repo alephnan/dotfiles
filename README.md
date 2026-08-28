@@ -40,6 +40,19 @@ before being replaced.
 
 Then open a new shell: `exec bash -l`.
 
+To re-run on a machine that is already set up, `./bootstrap.sh --skip-packages`
+does everything except invoke pacman.
+
+### A note on `lazy-lock.json`
+
+`bootstrap.sh` runs `Lazy! restore`, which pins every plugin to the commit in
+`lazy-lock.json`. lazy.nvim itself is the exception: `lua/config/lazy.lua`
+bootstraps it from its `stable` branch before the lockfile is read, so on a fresh
+machine it lands on whatever `stable` currently points at and rewrites its own
+entry. Expect `git status` to show a one-line `lazy-lock.json` change after the
+first bootstrap. Commit it or `git checkout --` it; either is fine, it does not
+affect the other plugins.
+
 ### It refuses to run if a config path is overridden
 
 Before linking, the script checks `XDG_CONFIG_HOME`, `STARSHIP_CONFIG` and

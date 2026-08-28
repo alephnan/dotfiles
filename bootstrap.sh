@@ -4,6 +4,23 @@ set -euo pipefail
 DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
 
+SKIP_PACKAGES=0
+for arg in "$@"; do
+  case "$arg" in
+    --skip-packages) SKIP_PACKAGES=1 ;;
+    -h|--help)
+      printf 'Usage: %s [--skip-packages]\n\n' "${0##*/}"
+      printf '  --skip-packages  Link configs and install plugins, but do not run pacman.\n'
+      printf '                   Useful when re-running on a machine that is already set up.\n'
+      exit 0
+      ;;
+    *)
+      printf 'Unknown argument: %s (try --help)\n' "$arg" >&2
+      exit 1
+      ;;
+  esac
+done
+
 # Plugin pins. These are the commits this configuration is known to work with;
 # lazy-lock.json plays the same role for the Neovim side.
 TPM_COMMIT="e261deb1b47614eed3400089ce7197dc68acc4eb"
@@ -72,10 +89,14 @@ log "Checking that config locations are the defaults"
 check_default_locations
 
 # ── Packages ──────────────────────────────────────────────────────────
-mapfile -t PACKAGES < <(grep -Ev '^\s*(#|$)' "$DOTFILES_DIR/packages.txt")
+if (( SKIP_PACKAGES )); then
+  log "Skipping package installation (--skip-packages)"
+else
+  mapfile -t PACKAGES < <(grep -Ev '^\s*(#|$)' "$DOTFILES_DIR/packages.txt")
 
-log "Installing required packages"
-sudo pacman -Syu --needed --noconfirm "${PACKAGES[@]}"
+  log "Installing required packages"
+  sudo pacman -Syu --needed --noconfirm "${PACKAGES[@]}"
+fi
 
 # ── Linking ───────────────────────────────────────────────────────────
 backup_target() {
