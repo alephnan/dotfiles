@@ -1,0 +1,20 @@
+# Scratch copies left behind while editing configs
+*.bak
+*.bak.*
+*.orig
+*~
+
+# Secrets — never commit these, even if one is copied in by accident
+hosts.yml
+.claude.json
+.netrc
+*.pem
+*.key
+id_*
+.env
+.env.*
+
+# Plugin/runtime state: managed by TPM and lazy.nvim, pinned via
+# lazy-lock.json and the commits in bootstrap.sh
+.tmux/plugins/
+.local/share/nvim/
