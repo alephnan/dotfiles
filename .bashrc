@@ -34,3 +34,4 @@ export PATH="/home/alephnan/.local/bin:$PATH"
 # Starship prompt (catppuccin-powerline preset -> ~/.config/starship.toml)
 # Requires a Nerd Font in the terminal for the powerline separators/icons.
 eval "$(starship init bash)"
+. "$HOME/.cargo/env"
