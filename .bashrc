@@ -28,7 +28,10 @@ export LS_COLORS
 PS1='[\u@\h \W]\$ '
 
 # >>> Codex installer >>>
-export PATH="/home/alephnan/.local/bin:$PATH"
+# Written by the Codex installer with $HOME expanded to an absolute path;
+# kept relative here so the repo works on a machine with a different user.
+# Re-running that installer will hardcode it again.
+export PATH="$HOME/.local/bin:$PATH"
 # <<< Codex installer <<<
 
 # Starship prompt (catppuccin-powerline preset -> ~/.config/starship.toml)
