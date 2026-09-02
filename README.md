@@ -11,7 +11,7 @@ config, and `git status` shows exactly how the setup has drifted.
 
 | Path | Links to | Contents |
 |---|---|---|
-| `.config/nvim/` | `~/.config/nvim` | lazy.nvim, Catppuccin Mocha, lualine, telescope, treesitter; LSP + completion for Python and Rust; relative line numbers, `unnamedplus` clipboard |
+| `.config/nvim/` | `~/.config/nvim` | lazy.nvim, Catppuccin Mocha, lualine, telescope, treesitter, neo-tree sidebar (`<leader>e`); LSP + completion for Python and Rust; relative line numbers, `unnamedplus` clipboard |
 | `.config/starship.toml` | `~/.config/starship.toml` | minimal prompt (`directory git_branch git_status ❯`) on the Catppuccin Mocha palette |
 | `.tmux.conf` | `~/.tmux.conf` | mouse, vi copy-mode, true colour, TPM, Catppuccin status bar pinned to the top |
 | `.bashrc` | `~/.bashrc` | DrvFs-aware `LS_COLORS` fixes, starship init, `~/.local/bin` on `PATH` |
@@ -125,7 +125,7 @@ backstop, not a guarantee — check `git status` before committing.
 │   │   ├── lazy-lock.json
 │   │   └── lua/
 │   │       ├── config/{lazy,options,keymaps,autocmds}.lua
-│   │       └── plugins/{blink,colorscheme,icons,lsp,lualine,telescope,treesitter}.lua
+│   │       └── plugins/{blink,colorscheme,icons,lsp,lualine,neo-tree,telescope,treesitter}.lua
 │   └── starship.toml
 ├── .tmux.conf
 ├── windows/
