@@ -11,7 +11,7 @@ config, and `git status` shows exactly how the setup has drifted.
 
 | Path | Links to | Contents |
 |---|---|---|
-| `.config/nvim/` | `~/.config/nvim` | lazy.nvim, Catppuccin Mocha, lualine, telescope, treesitter; relative line numbers, `unnamedplus` clipboard |
+| `.config/nvim/` | `~/.config/nvim` | lazy.nvim, Catppuccin Mocha, lualine, telescope, treesitter; LSP + completion for Python and Rust; relative line numbers, `unnamedplus` clipboard |
 | `.config/starship.toml` | `~/.config/starship.toml` | minimal prompt (`directory git_branch git_status ❯`) on the Catppuccin Mocha palette |
 | `.tmux.conf` | `~/.tmux.conf` | mouse, vi copy-mode, true colour, TPM, Catppuccin status bar pinned to the top |
 | `.bashrc` | `~/.bashrc` | DrvFs-aware `LS_COLORS` fixes, starship init, `~/.local/bin` on `PATH` |
@@ -21,6 +21,22 @@ config, and `git status` shows exactly how the setup has drifted.
 
 Plugin versions are pinned: `.config/nvim/lazy-lock.json` for Neovim, and the
 TPM / `catppuccin/tmux` commits near the top of `bootstrap.sh` for tmux.
+
+### Language servers
+
+The Neovim config enables three, and the lockfile does *not* cover them — they are
+ordinary binaries on `PATH`, installed by `bootstrap.sh` from three different places:
+
+| Server | Language | Source |
+|---|---|---|
+| `ruff` | Python (lint + format) | pacman, via `packages.txt` |
+| `basedpyright` | Python (types, completion) | `npm install -g` |
+| `rust-analyzer` | Rust | `rustup component add` |
+
+`rustup` itself is not in `packages.txt` on purpose. The official installer from
+rustup.rs puts it in `~/.cargo/bin`, and Arch's `rustup` package installs a second copy
+into `/usr/bin`; `bootstrap.sh` uses whichever is already on `PATH` and tells you how to
+get one if neither is.
 
 ## Install on a new machine
 
@@ -109,7 +125,7 @@ backstop, not a guarantee — check `git status` before committing.
 │   │   ├── lazy-lock.json
 │   │   └── lua/
 │   │       ├── config/{lazy,options,keymaps,autocmds}.lua
-│   │       └── plugins/{colorscheme,icons,lualine,telescope,treesitter}.lua
+│   │       └── plugins/{blink,colorscheme,icons,lsp,lualine,telescope,treesitter}.lua
 │   └── starship.toml
 ├── .tmux.conf
 ├── windows/

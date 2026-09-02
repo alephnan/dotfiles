@@ -1,8 +1,8 @@
 -- Parsers to install, and the filetypes that should use them.
 -- The `main` branch no longer has highlight/indent modules -- we enable them
 -- ourselves via `vim.treesitter.start()` on FileType.
-local parsers = { "lua", "vim", "vimdoc", "bash", "python", "json" }
-local filetypes = { "lua", "vim", "help", "sh", "bash", "python", "json" }
+local parsers = { "lua", "vim", "vimdoc", "bash", "python", "rust", "toml", "json" }
+local filetypes = { "lua", "vim", "help", "sh", "bash", "python", "rust", "toml", "json" }
 
 return {
   "nvim-treesitter/nvim-treesitter",

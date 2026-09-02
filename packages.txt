@@ -14,6 +14,7 @@ curl
 wget
 python
 python-pip
+ruff
 github-cli
 nodejs
 npm

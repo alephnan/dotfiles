@@ -98,6 +98,33 @@ else
   sudo pacman -Syu --needed --noconfirm "${PACKAGES[@]}"
 fi
 
+# ── Language servers ──────────────────────────────────────────────────
+# The Neovim config enables basedpyright, ruff and rust_analyzer. ruff is a
+# pacman package and comes from packages.txt; the other two do not exist in
+# the Arch repositories and are installed here.
+#
+# `npm -g` writes into /usr, which is pacman's territory -- these files end up
+# unowned by any package, so a nodejs upgrade can remove them. Re-running this
+# script puts them back.
+#
+# rustup is deliberately not in packages.txt: the official rustup.rs installer
+# puts it in ~/.cargo/bin, and Arch's `rustup` package would install a second
+# copy in /usr/bin that the PATH then shadows. Use whichever one is present.
+log "Installing language servers"
+
+if (( SKIP_PACKAGES )); then
+  printf 'Skipping basedpyright (--skip-packages)\n'
+else
+  sudo npm install -g basedpyright
+fi
+
+if command -v rustup >/dev/null 2>&1; then
+  rustup component add rust-analyzer
+else
+  printf 'rustup not found -- install it from https://rustup.rs, then run:\n' >&2
+  printf '  rustup component add rust-analyzer\n' >&2
+fi
+
 # ── Linking ───────────────────────────────────────────────────────────
 backup_target() {
   local target="$1"
